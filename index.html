@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1.0.0">
+  <link rel="stylesheet" href="css/style.css?v=1.1.0">
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 <div class="topstrip">
   <div class="container">
     <span>🚚 <strong>FREE delivery</strong> on orders over ₦100,000</span>
-    <span>📞 Need help? <strong id="topPhone">+234 800 000 0000</strong></span>
+    <span>📞 Call to Order: <strong id="topPhone">+234 800 000 0000</strong></span>
   </div>
 </div>
 
@@ -35,6 +35,11 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="nav-actions">
+      <form class="nav-search" onsubmit="navSearch(event)" role="search">
+        <input type="text" placeholder="Search products, gadgets & more..." aria-label="Search Vendora">
+        <button type="submit" aria-label="Search">🔍</button>
+      </form>
+
       <a class="btn btn-gold btn-sm" href="shop.html">Shop Now</a>
       <button class="icon-btn" onclick="openCart()" aria-label="Open cart">🛒<span class="cart-count">0</span></button>
       <button class="icon-btn menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
@@ -43,7 +48,8 @@
 </header>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero hero-carousel" id="heroCarousel">
+  <div class="slide s-active" data-slide="0">
   <div class="container hero-inner">
     <div>
       <h1>Everything you love, <em>delivered.</em></h1>
@@ -67,9 +73,76 @@
       <div class="hero-badge"><span class="dot"></span> Store open · Delivering now</div>
     </div>
   </div>
+  </div>
+  <div class="slide slide-promo" data-slide="1">
+    <div class="container hero-inner">
+      <div>
+        <span class="kicker kicker-light">Vendora Kitchen</span>
+        <h1>Hot pizza. <em>45 minutes.</em></h1>
+        <p class="lead">Fresh from our kitchen — hand-stretched dough, premium toppings, burgers, wings, jollof and shakes. Baked to order and delivered hot.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href="food.html">See the Food Menu 🍕</a>
+          <a class="btn btn-outline" href="shop.html" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.5)">Shop Products</a>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><b>~45min</b><span>Food delivery</span></div>
+          <div class="stat"><b>8am–10pm</b><span>Kitchen open daily</span></div>
+          <div class="stat"><b>12</b><span>Menu items</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="assets/img/hero-food.jpg" alt="Pizza fresh from Vendora Kitchen">
+        <div class="hero-badge"><span class="dot"></span> Kitchen open · Cooking now</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide slide-promo" data-slide="2">
+    <div class="container hero-inner">
+      <div>
+        <span class="kicker kicker-light">Phones & Gadgets</span>
+        <h1>Gadget season <em>is here.</em></h1>
+        <p class="lead">5G smartphones, wireless audio, power banks and laptops — genuine products, sealed boxes, warranty included.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href="shop.html">Shop Gadgets</a>
+          <a class="btn btn-outline" href="contact.html" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.5)">Talk to Us</a>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><b>Sealed</b><span>Genuine products</span></div>
+          <div class="stat"><b>Warranty</b><span>On electronics</span></div>
+          <div class="stat"><b>Fast</b><span>Same-day Lagos</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="assets/img/p3.jpg" alt="Smartphones and gadgets at Vendora">
+        <div class="hero-badge"><span class="dot"></span> Free delivery over ₦100,000</div>
+      </div>
+    </div>
+  </div>
+  <button class="car-btn prev" onclick="moveSlide(-1)" aria-label="Previous slide">‹</button>
+  <button class="car-btn next" onclick="moveSlide(1)" aria-label="Next slide">›</button>
+  <div class="car-dots" id="carDots"></div>
 </section>
 
 <!-- Categories -->
+<!-- Flash Sale -->
+<section class="section flash-sec">
+  <div class="container">
+    <div class="flash-head">
+      <div>
+        <span class="kicker">⚡ Flash Sale</span>
+        <h2>Deals that end at midnight</h2>
+        <p>Limited stock at today's prices — gone when the timer hits zero.</p>
+      </div>
+      <div class="flash-right">
+        <div class="countdown" id="flashCountdown" aria-label="Time left in flash sale"></div>
+        <a class="btn btn-outline-dark btn-sm" href="shop.html">See All Deals →</a>
+      </div>
+    </div>
+    <div class="grid" id="flashGrid"></div>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
     <div class="section-head">
@@ -194,6 +267,9 @@
         <ul>
           <li><a href="contact.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="returns.html">Returns & Refunds</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
           <li><a href="checkout.html">Track Your Order</a></li>
         </ul>
       </div>
@@ -220,9 +296,18 @@
   </div>
 </aside>
 
-<script src="js/config.js?v=1.0.0"></script>
-<script src="js/data.js?v=1.0.0"></script>
-<script src="js/app.js?v=1.0.0"></script>
+
+<!-- Cookie notice -->
+<div class="cookie-banner" id="cookieBanner" hidden>
+  <p>🍪 We use cookies to keep your cart working and improve your experience. See our <a href="privacy.html">Privacy Policy</a>.</p>
+  <div class="cookie-actions">
+    <a class="cookie-learn" href="privacy.html">Learn more</a>
+    <button class="btn btn-gold btn-sm" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+<script src="js/config.js?v=1.1.0"></script></script>
+<script src="js/data.js?v=1.1.0"></script>
+<script src="js/app.js?v=1.1.0"></script>
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
   document.getElementById("topPhone").textContent = STORE.phoneDisplay;

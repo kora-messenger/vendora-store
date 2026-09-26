@@ -51,3 +51,12 @@ The site auto-deploys to GitHub Pages on every push to `main` via `.github/workf
 ## 🔒 Payments
 
 Currently: pay on delivery + bank transfer. A Paystack online-card checkout is stubbed in the checkout payment options and can be wired up when the client provides their Paystack keys.
+
+## v1.1.0 — Jumia-style update
+
+- Full-width nav search on every page
+- Auto-rotating 3-slide hero carousel with dots and arrows
+- Flash Sale section with live midnight countdown and low-stock counters
+- Call to Order top strip
+- Cookie notice banner
+- Policy pages: Terms of Service, Privacy Policy, Returns & Refunds (linked in footer and checkout)

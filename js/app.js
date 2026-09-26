@@ -259,6 +259,7 @@ function renderCheckout() {
       <div class="summary-line"><span>Delivery</span><span>${delivery === 0 ? "FREE 🎉" : formatNaira(delivery)}</span></div>
       <div class="summary-line summary-total"><span>Total</span><span>${formatNaira(subtotal + delivery)}</span></div>
       <button class="btn btn-gold btn-block" style="margin-top:18px" onclick="submitIfValid()">Place Order via WhatsApp</button>
+      <p class="terms-note">By placing your order you agree to our <a href="terms.html">Terms of Service</a>, <a href="returns.html">Returns & Refunds Policy</a> and <a href="privacy.html">Privacy Policy</a>.</p>
       <p style="font-size:12.5px;color:var(--muted);margin-top:10px;text-align:center">Your order is sent to our team instantly — we confirm price, stock and delivery time before payment.</p>
     </div>`;
   document.getElementById("summaryItems").innerHTML = cart.map(l => {
@@ -328,3 +329,116 @@ function heroSearch(e) {
   const q = document.getElementById("heroQuery").value.trim();
   window.location.href = "shop.html?q=" + encodeURIComponent(q);
 }
+
+/* ---------- Nav search ---------- */
+function navSearch(e) {
+  e.preventDefault();
+  const q = e.target.querySelector("input").value.trim();
+  if (q) window.location.href = "shop.html?q=" + encodeURIComponent(q);
+}
+
+/* ---------- Hero carousel ---------- */
+let slideIdx = 0, slideTimer = null;
+
+function showSlide(i) {
+  const car = document.getElementById("heroCarousel");
+  if (!car) return;
+  const slides = car.querySelectorAll(".slide");
+  if (!slides.length) return;
+  slideIdx = (i + slides.length) % slides.length;
+  slides.forEach((sl, n) => sl.classList.toggle("s-active", n === slideIdx));
+  renderDots();
+}
+
+function moveSlide(d) {
+  showSlide(slideIdx + d);
+  restartAuto();
+}
+
+function renderDots() {
+  const dots = document.getElementById("carDots");
+  const car = document.getElementById("heroCarousel");
+  if (!dots || !car) return;
+  const total = car.querySelectorAll(".slide").length;
+  dots.innerHTML = Array.from({ length: total }, (_, n) =>
+    `<button class="dot ${n === slideIdx ? "on" : ""}" onclick="showSlide(${n});restartAuto()" aria-label="Slide ${n + 1}"></button>`
+  ).join("");
+}
+
+function restartAuto() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(() => showSlide(slideIdx + 1), 6000);
+}
+
+/* ---------- Flash sale ---------- */
+function stockLeft(id) {
+  // deterministic pseudo stock 3–12 so the same product shows the same count
+  let h = 0;
+  for (const ch of id + "vendora") h = (h * 31 + ch.charCodeAt(0)) % 97;
+  return 3 + (h % 10);
+}
+
+function flashCard(p) {
+  const pct = Math.round((1 - p.price / p.oldPrice) * 100);
+  const left = stockLeft(p.id);
+  const low = left <= 5;
+  return `
+  <article class="card">
+    <div class="card-media">
+      <img src="${p.img}" alt="${p.name}" loading="lazy"
+           onerror="this.outerHTML='<div class=ph>📦</div>'">
+      <span class="badge">-${pct}%</span>
+    </div>
+    <div class="card-body">
+      <span class="card-cat">${p.cat}</span>
+      <h3 class="card-title">${p.name}</h3>
+      <div class="price-row">
+        <span class="price">${formatNaira(p.price)}</span>
+        <span class="price-old">${formatNaira(p.oldPrice)}</span>
+      </div>
+      <span class="stock ${low ? "low" : ""}">${low ? "🔥" : "📦"} Only ${left} left</span>
+      <button class="btn btn-gold btn-sm btn-block" onclick="addToCart('${p.id}')">Add to Cart</button>
+    </div>
+  </article>`;
+}
+
+function renderFlash() {
+  const grid = document.getElementById("flashGrid");
+  if (!grid) return;
+  const deals = PRODUCTS.filter(p => p.oldPrice).slice(0, 6);
+  grid.innerHTML = deals.map(flashCard).join("");
+}
+
+function tickCountdown() {
+  const el = document.getElementById("flashCountdown");
+  if (!el) return;
+  const now = new Date();
+  const end = new Date(); end.setHours(24, 0, 0, 0);
+  let s = Math.max(0, Math.floor((end - now) / 1000));
+  const h = String(Math.floor(s / 3600)).padStart(2, "0");
+  const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+  const sec = String(s % 60).padStart(2, "0");
+  el.innerHTML = `<span class="cd">${h}</span>:<span class="cd">${m}</span>:<span class="cd">${sec}</span><small>left today</small>`;
+}
+
+/* ---------- Cookie notice ---------- */
+function acceptCookies() {
+  localStorage.setItem("vendora_cookies_ok", "1");
+  const b = document.getElementById("cookieBanner");
+  if (b) b.hidden = true;
+}
+
+/* ---------- Page init ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  // cookie banner
+  const cb = document.getElementById("cookieBanner");
+  if (cb && !localStorage.getItem("vendora_cookies_ok")) setTimeout(() => cb.hidden = false, 1200);
+  // carousel
+  if (document.getElementById("heroCarousel")) { renderDots(); restartAuto(); }
+  // flash sale
+  if (document.getElementById("flashGrid")) {
+    renderFlash();
+    tickCountdown();
+    setInterval(tickCountdown, 1000);
+  }
+});

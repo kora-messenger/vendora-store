@@ -348,3 +348,77 @@ footer li a:hover { color: var(--gold); }
   .footer-grid { grid-template-columns: 1fr; }
   .section { padding: 50px 0; }
 }
+
+/* ============================================================
+   v1.1.0 — Nav search, hero carousel, flash sale, cookie banner
+   ============================================================ */
+
+/* Nav search */
+.nav-search { display:flex; align-items:center; background:#F1F5F9; border:1px solid #E2E8F0; border-radius:10px; overflow:hidden; }
+.nav-search input { border:0; background:transparent; padding:10px 14px; width:230px; font-size:.92rem; outline:none; color:#0A2540; }
+.nav-search button { border:0; background:#0A2540; color:#fff; padding:10px 14px; cursor:pointer; font-size:.9rem; }
+.nav-search button:hover { background:#0B3A66; }
+
+/* Hero carousel */
+.hero { position:relative; }
+.hero-carousel { padding-top:24px; padding-bottom:24px; }
+.hero .slide { display:none; }
+.hero .slide.s-active { display:block; animation:fadeSlide .5s ease; }
+@keyframes fadeSlide { from { opacity:.25; transform:translateY(6px);} to { opacity:1; transform:none;} }
+.car-btn { position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(10,37,64,.45); color:#fff; font-size:1.5rem; line-height:1; cursor:pointer; z-index:3; transition:background .2s; }
+.car-btn:hover { background:rgba(10,37,64,.75); }
+.car-btn.prev { left:14px; } .car-btn.next { right:14px; }
+.car-dots { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:3; }
+.car-dots .dot { width:9px; height:9px; border-radius:50%; border:0; background:rgba(255,255,255,.4); cursor:pointer; padding:0; }
+.car-dots .dot.on { background:#F0B429; width:22px; border-radius:6px; }
+.kicker-light { color:#F0B429; }
+.slide-promo { background:linear-gradient(115deg,#0A2540 0%, #103B66 100%); border-radius:18px; margin:12px 0; }
+
+/* Flash sale */
+.flash-sec { background:linear-gradient(180deg,#FFF9EE 0%, #FFFFFF 100%); }
+.flash-head { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:28px; flex-wrap:wrap; }
+.flash-right { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.countdown { display:flex; align-items:center; gap:4px; font-weight:800; color:#0A2540; }
+.countdown .cd { background:#0A2540; color:#fff; font-variant-numeric:tabular-nums; padding:8px 10px; border-radius:8px; font-size:1.05rem; letter-spacing:1px; }
+.countdown small { font-weight:600; color:#64748B; margin-left:8px; }
+.stock { display:inline-block; margin:8px 0 10px; font-size:.8rem; font-weight:700; color:#B45309; background:#FEF3C7; padding:3px 10px; border-radius:999px; }
+.stock.low { color:#B91C1C; background:#FEE2E2; }
+.btn-outline-dark { border:1.5px solid #0A2540; color:#0A2540; background:transparent; }
+.btn-outline-dark:hover { background:#0A2540; color:#fff; }
+
+/* Cookie banner */
+.cookie-banner { position:fixed; bottom:0; left:0; right:0; z-index:90; background:#0A2540; color:#E2E8F0; padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; box-shadow:0 -6px 24px rgba(2,6,23,.25); font-size:.9rem; }
+.cookie-banner p { margin:0; }
+.cookie-banner a { color:#F0B429; }
+.cookie-actions { display:flex; align-items:center; gap:14px; }
+.cookie-learn { color:#94A3B8; text-decoration:underline; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .nav-search { order:5; width:100%; margin-top:10px; }
+  .nav-search input { flex:1; width:auto; }
+  .nav-actions { flex-wrap:wrap; }
+  .car-btn { display:none; }
+  .flash-head { align-items:flex-start; }
+}
+@media (max-width: 560px) {
+  .countdown .cd { font-size:.9rem; padding:6px 8px; }
+}
+
+/* ============================================================
+   v1.1.0 — Policy pages
+   ============================================================ */
+.policy-hero { background:linear-gradient(115deg,#0A2540 0%,#103B66 100%); color:#fff; padding:56px 0 48px; }
+.policy-hero h1 { font-size:clamp(1.7rem,4vw,2.6rem); margin:8px 0 6px; }
+.policy-hero p { color:#94A3B8; font-size:.95rem; margin:0; }
+.policy { max-width:820px; padding:40px 24px 72px; }
+.policy-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; padding:28px 30px; margin-bottom:22px; }
+.policy-card h2 { font-size:1.25rem; margin:0 0 14px; color:#0A2540; }
+.policy-card h3 { font-size:1.02rem; margin:18px 0 8px; color:#0A2540; }
+.policy-card p, .policy-card li { color:#475569; line-height:1.75; font-size:.97rem; }
+.policy-card ul, .policy-card ol { margin:0; padding-left:20px; }
+.policy-card li { margin-bottom:8px; }
+.policy-card a { color:#B8860B; font-weight:600; }
+@media (max-width:560px) { .policy-card { padding:22px 18px; } }
+.terms-note { font-size:.82rem; color:#64748B; margin-top:12px; line-height:1.6; }
+.terms-note a { color:#B8860B; }
