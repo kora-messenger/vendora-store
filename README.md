@@ -26,6 +26,7 @@ css/style.css   Full design system
 js/config.js    ⚙️ STORE SETTINGS — phone, WhatsApp, email, address, delivery fee
 js/data.js      Products & food menu data (edit to change catalog)
 js/app.js       Cart, rendering, checkout logic
+assets/img/    All product & hero images (bundled, no external dependencies)
 ```
 
 ## ⚙️ Client Setup (before go-live)
@@ -35,7 +36,7 @@ js/app.js       Cart, rendering, checkout logic
    - `email`, `phoneDisplay`, `address`, `hours`
    - `deliveryFee` and `freeDeliveryOver` thresholds
 2. Update products/menu in `js/data.js` (name, category, price, image URL, description).
-3. Replace the Unsplash placeholder images with real product photos when available.
+3. Replace the placeholder product photos in `assets/img/` with real product photos (same filenames, or update `js/data.js`).
 
 ## 🌐 Custom Domain (later)
 
